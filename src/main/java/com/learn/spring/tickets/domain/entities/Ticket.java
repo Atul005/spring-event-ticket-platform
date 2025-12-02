@@ -1,4 +1,4 @@
-package com.learn.spring.tickets.domain;
+package com.learn.spring.tickets.domain.entities;
 
 import jakarta.persistence.*;
 import lombok.*;

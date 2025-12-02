@@ -1,4 +1,4 @@
-package com.learn.spring.tickets.domain;
+package com.learn.spring.tickets.domain.entities;
 
 
 import jakarta.persistence.*;
@@ -11,13 +11,13 @@ import java.util.Objects;
 import java.util.UUID;
 
 @Entity
-@Table(name = "ticket_validations")
+@Table(name = "qr_codes")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class TicketValidation {
+public class QRCode {
 
     @Id
     @Column(name = "id", nullable = false, updatable = false)
@@ -25,19 +25,18 @@ public class TicketValidation {
     private UUID id;
 
 
-    @Column(name = "status",  nullable = false)
+    @Column(name = "status", nullable = false)
     @Enumerated(EnumType.STRING)
-    private TicketValidationStatusEnum status;
+    private QRCodeStatusEnum status;
 
 
-    @Column(name = "validation_method",  nullable = false)
-    @Enumerated(EnumType.STRING)
-    private TicketValidationMethodEnum validationMethod;
-
+    @Column(name = "value", nullable = false)
+    private String value;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ticket_id")
     private Ticket ticket;
+
 
     @CreatedDate
     @Column(name = "created_at", updatable = false, nullable = false)
@@ -52,12 +51,12 @@ public class TicketValidation {
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
-        TicketValidation that = (TicketValidation) o;
-        return Objects.equals(id, that.id) && status == that.status && validationMethod == that.validationMethod && Objects.equals(createdAt, that.createdAt) && Objects.equals(updatedAt, that.updatedAt);
+        QRCode qrCode = (QRCode) o;
+        return Objects.equals(id, qrCode.id) && status == qrCode.status && Objects.equals(value, qrCode.value) && Objects.equals(createdAt, qrCode.createdAt) && Objects.equals(updatedAt, qrCode.updatedAt);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, status, validationMethod, createdAt, updatedAt);
+        return Objects.hash(id, status, value, createdAt, updatedAt);
     }
 }

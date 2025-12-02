@@ -1,4 +1,4 @@
-package com.learn.spring.tickets.domain;
+package com.learn.spring.tickets.domain.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -17,7 +17,6 @@ import java.util.UUID;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 public class User {
 
     @Id

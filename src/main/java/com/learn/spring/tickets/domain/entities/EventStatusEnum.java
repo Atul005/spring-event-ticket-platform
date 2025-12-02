@@ -1,4 +1,4 @@
-package com.learn.spring.tickets.domain;
+package com.learn.spring.tickets.domain.entities;
 
 public enum EventStatusEnum {
     DRAFT,

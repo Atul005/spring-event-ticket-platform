@@ -1,4 +1,4 @@
-package com.learn.spring.tickets.domain;
+package com.learn.spring.tickets.domain.entities;
 
 
 import jakarta.persistence.*;
@@ -11,13 +11,13 @@ import java.util.Objects;
 import java.util.UUID;
 
 @Entity
-@Table(name = "qr_codes")
+@Table(name = "ticket_validations")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class QRCode {
+public class TicketValidation {
 
     @Id
     @Column(name = "id", nullable = false, updatable = false)
@@ -25,18 +25,19 @@ public class QRCode {
     private UUID id;
 
 
-    @Column(name = "status", nullable = false)
+    @Column(name = "status",  nullable = false)
     @Enumerated(EnumType.STRING)
-    private QRCodeStatusEnum status;
+    private TicketValidationStatusEnum status;
 
 
-    @Column(name = "value", nullable = false)
-    private String value;
+    @Column(name = "validation_method",  nullable = false)
+    @Enumerated(EnumType.STRING)
+    private TicketValidationMethodEnum validationMethod;
+
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ticket_id")
     private Ticket ticket;
-
 
     @CreatedDate
     @Column(name = "created_at", updatable = false, nullable = false)
@@ -51,12 +52,12 @@ public class QRCode {
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
-        QRCode qrCode = (QRCode) o;
-        return Objects.equals(id, qrCode.id) && status == qrCode.status && Objects.equals(value, qrCode.value) && Objects.equals(createdAt, qrCode.createdAt) && Objects.equals(updatedAt, qrCode.updatedAt);
+        TicketValidation that = (TicketValidation) o;
+        return Objects.equals(id, that.id) && status == that.status && validationMethod == that.validationMethod && Objects.equals(createdAt, that.createdAt) && Objects.equals(updatedAt, that.updatedAt);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, status, value, createdAt, updatedAt);
+        return Objects.hash(id, status, validationMethod, createdAt, updatedAt);
     }
 }
