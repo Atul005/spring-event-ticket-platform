@@ -1,11 +1,10 @@
 package com.learn.spring.tickets.repositories;
-
-import com.learn.spring.tickets.domain.entities.User;
+import com.learn.spring.tickets.domain.entities.Event;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.UUID;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, UUID> {
+public interface EventRepository extends JpaRepository<Event , UUID> {
 }
