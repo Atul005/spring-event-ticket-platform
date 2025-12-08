@@ -38,14 +38,14 @@ public class EventServiceImpl implements EventService {
         newEvent.setVenue(eventRequest.getVenue());
         newEvent.setSalesStart(eventRequest.getSalesStart());
         newEvent.setSalesEnd(eventRequest.getSalesEnd());
-        newEvent.setTicketTypes(getTicketTypes(eventRequest.getTicketTypes()));
+        newEvent.setTicketTypes(getTicketTypes(eventRequest.getTicketTypes(), newEvent));
         newEvent.setOrganizer(organizer);
 
         return eventRepository.save(newEvent);
 
     }
 
-    private List<TicketType> getTicketTypes(List<CreateTicketTypeRequest> ticketTypesRequest) {
+    private List<TicketType> getTicketTypes(List<CreateTicketTypeRequest> ticketTypesRequest, Event newEvent) {
         List<TicketType> ticketTypeList = new ArrayList<>();
         for (CreateTicketTypeRequest request: ticketTypesRequest){
             TicketType ticketType = new TicketType();
@@ -54,6 +54,7 @@ public class EventServiceImpl implements EventService {
             ticketType.setDescription(request.getDescription());
             ticketType.setTotalAvailable(request.getTotalAvailable());
             ticketTypeList.add(ticketType);
+            ticketType.setEvent(newEvent);
         }
         return ticketTypeList;
     }
