@@ -10,6 +10,8 @@ import com.learn.spring.tickets.repositories.EventRepository;
 import com.learn.spring.tickets.repositories.UserRepository;
 import com.learn.spring.tickets.services.EventService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -43,6 +45,11 @@ public class EventServiceImpl implements EventService {
 
         return eventRepository.save(newEvent);
 
+    }
+
+    @Override
+    public Page<Event> listEventForOrganizer(UUID organizerId, Pageable pageable) {
+        return eventRepository.findByOrganizerId(organizerId, pageable);
     }
 
     private List<TicketType> getTicketTypes(List<CreateTicketTypeRequest> ticketTypesRequest, Event newEvent) {
