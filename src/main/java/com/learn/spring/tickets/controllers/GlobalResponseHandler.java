@@ -48,7 +48,8 @@ public class GlobalResponseHandler {
     public ResponseEntity<ErrorDTO> handleUserNotFoundException(UserNotFoundException ex){
         log.error("Caught UserNotFoundException  ",ex);
         ErrorDTO errorDTO = new ErrorDTO();
-        errorDTO.setError("An unknown error occurred!!!");
+        errorDTO.setError("User not found");
+
         return new ResponseEntity<>(errorDTO, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
@@ -57,7 +58,7 @@ public class GlobalResponseHandler {
     public ResponseEntity<ErrorDTO> handleException(Exception ex){
         log.error("Caught exception ",ex);
         ErrorDTO errorDTO = new ErrorDTO();
-        errorDTO.setError("User not found");
+        errorDTO.setError("An unknown error occurred!!!");
         return new ResponseEntity<>(errorDTO, HttpStatus.BAD_REQUEST);
     }
 

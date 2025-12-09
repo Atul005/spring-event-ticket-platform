@@ -1,8 +1,10 @@
 package com.learn.spring.tickets.domain.DTOs;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.learn.spring.tickets.domain.entities.EventStatusEnum;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,7 +29,8 @@ public class CreateEventRequestDTO {
     private LocalDateTime salesStart;
     private LocalDateTime salesEnd;
 
-    @NotBlank(message = "Event status must be provided")
+    @NotNull(message = "Event status must be provided")
+    @JsonProperty("status")
     private EventStatusEnum eventStatus;
 
     @NotEmpty(message = "At least one ticket type is required")
