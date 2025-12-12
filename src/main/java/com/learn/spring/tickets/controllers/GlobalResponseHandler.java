@@ -1,6 +1,9 @@
 package com.learn.spring.tickets.controllers;
 
 import com.learn.spring.tickets.domain.DTOs.ErrorDTO;
+import com.learn.spring.tickets.exceptions.EventNotFoundException;
+import com.learn.spring.tickets.exceptions.EventUpdateException;
+import com.learn.spring.tickets.exceptions.TicketTypeNotFoundException;
 import com.learn.spring.tickets.exceptions.UserNotFoundException;
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
@@ -49,8 +52,32 @@ public class GlobalResponseHandler {
         log.error("Caught UserNotFoundException  ",ex);
         ErrorDTO errorDTO = new ErrorDTO();
         errorDTO.setError("User not found");
+        return new ResponseEntity<>(errorDTO, HttpStatus.BAD_REQUEST);
+    }
 
-        return new ResponseEntity<>(errorDTO, HttpStatus.INTERNAL_SERVER_ERROR);
+    @ExceptionHandler(EventNotFoundException.class)
+    public ResponseEntity<ErrorDTO> handleEventNotFoundException(EventNotFoundException ex){
+        log.error("Caught EventNotFoundException  ",ex);
+        ErrorDTO errorDTO = new ErrorDTO();
+        errorDTO.setError("Event not found");
+        return new ResponseEntity<>(errorDTO, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(TicketTypeNotFoundException.class)
+    public ResponseEntity<ErrorDTO> handleTicketTypeNotFoundException(TicketTypeNotFoundException ex){
+        log.error("Caught TicketTypeNotFoundException  ",ex);
+        ErrorDTO errorDTO = new ErrorDTO();
+        errorDTO.setError("Ticket Type not found");
+        return new ResponseEntity<>(errorDTO, HttpStatus.BAD_REQUEST);
+    }
+
+
+    @ExceptionHandler(EventUpdateException.class)
+    public ResponseEntity<ErrorDTO> EventUpdateException(EventUpdateException ex){
+        log.error("Caught EventUpdateException  ",ex);
+        ErrorDTO errorDTO = new ErrorDTO();
+        errorDTO.setError("Unable to update event");
+        return new ResponseEntity<>(errorDTO, HttpStatus.BAD_REQUEST);
     }
 
 

@@ -2,9 +2,8 @@ package com.learn.spring.tickets.controllers;
 
 
 import com.learn.spring.tickets.domain.CreateEventRequest;
-import com.learn.spring.tickets.domain.DTOs.CreateEventRequestDTO;
-import com.learn.spring.tickets.domain.DTOs.CreateEventResponseDTO;
-import com.learn.spring.tickets.domain.DTOs.ListEventResponseDTO;
+import com.learn.spring.tickets.domain.DTOs.*;
+import com.learn.spring.tickets.domain.UpdateEventRequest;
 import com.learn.spring.tickets.domain.entities.Event;
 import com.learn.spring.tickets.mappers.EventMapper;
 import com.learn.spring.tickets.services.EventService;
@@ -42,6 +41,19 @@ public class EventController {
 
     }
 
+    @PutMapping(path = "/{eventId}")
+    public ResponseEntity<UpdateEventResponseDTO> updateEvent(
+            @AuthenticationPrincipal Jwt jwt,
+            @Valid @RequestBody UpdateEventRequestDTO updateEventRequestDTO, @PathVariable UUID eventId) {
+        UpdateEventRequest updateEventRequest = eventMapper.fromDTO(updateEventRequestDTO);
+        UUID userID = getUserID(jwt);
+        System.out.println(userID);
+        Event updatedEvent = eventService.updateEventForOrganizer(userID, eventId, updateEventRequest);
+        UpdateEventResponseDTO updateEventResponseDTO = eventMapper.toUpdateEventResponseDTO(updatedEvent);
+        return ResponseEntity.ok(updateEventResponseDTO);
+
+    }
+
 
 
     @GetMapping
@@ -62,6 +74,14 @@ public class EventController {
                 .map(eventMapper::toDTO)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
+    }
+
+
+    @DeleteMapping("/{eventId}")
+    public ResponseEntity<Void> deleteEvent(@AuthenticationPrincipal Jwt jwt, @PathVariable UUID eventId){
+        UUID userID = getUserID(jwt);
+        eventService.deleteEventForOrganizer(eventId, userID);
+        return ResponseEntity.noContent().build();
     }
 
     private static UUID getUserID(Jwt jwt) {

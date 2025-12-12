@@ -4,6 +4,8 @@ package com.learn.spring.tickets.mappers;
 import com.learn.spring.tickets.domain.CreateEventRequest;
 import com.learn.spring.tickets.domain.CreateTicketTypeRequest;
 import com.learn.spring.tickets.domain.DTOs.*;
+import com.learn.spring.tickets.domain.UpdateEventRequest;
+import com.learn.spring.tickets.domain.UpdateTicketTypeRequest;
 import com.learn.spring.tickets.domain.entities.Event;
 import com.learn.spring.tickets.domain.entities.TicketType;
 import org.mapstruct.Mapper;
@@ -25,5 +27,17 @@ public interface EventMapper {
     ListEventTicketTypeResponseDTO toListEventTicketTypeDTO(TicketType ticketType);
 
     ListEventResponseDTO toListEventResponseDTO(Event event);
+
+    @Mapping(source = "eventStatus", target = "eventStatus")
+    UpdateEventRequest fromDTO(UpdateEventRequestDTO dto);
+
+    UpdateTicketTypeRequest fromDTO(UpdateTicketTypeRequestDTO dto);
+
+    UpdateTicketTypeResponseDTO toUpdateTicketTypeResponseDTO(TicketType ticketType);
+
+    UpdateEventResponseDTO toUpdateEventResponseDTO(Event event);
+
+    ListPublishedEventResponseDTO toListPublishedEventResponseDTO(Event event);
+
 
 }

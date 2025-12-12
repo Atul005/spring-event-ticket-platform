@@ -1,5 +1,6 @@
 package com.learn.spring.tickets.repositories;
 import com.learn.spring.tickets.domain.entities.Event;
+import com.learn.spring.tickets.domain.entities.EventStatusEnum;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,5 +14,5 @@ public interface EventRepository extends JpaRepository<Event , UUID> {
 
     Page<Event> findByOrganizerId(UUID organizerId, Pageable pageable);
     Optional<Event> findByIdAndOrganizerId(UUID eventId, UUID organizerId);
-
+    Page<Event> findByEventStatus(EventStatusEnum eventStatusEnum, Pageable pageable);
 }
