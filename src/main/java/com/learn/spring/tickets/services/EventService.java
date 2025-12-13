@@ -22,5 +22,9 @@ public interface EventService {
 
     void deleteEventForOrganizer(UUID eventId, UUID userId);
 
+    Page<Event> searchPublishedEvents(String query, Pageable pageable);
+
     Page<Event> listPublishedEvents(Pageable pageable);
+
+    Optional<Event> getPublishedEvent(UUID eventId);
 }
