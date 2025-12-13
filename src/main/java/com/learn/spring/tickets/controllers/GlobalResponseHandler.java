@@ -1,10 +1,7 @@
 package com.learn.spring.tickets.controllers;
 
 import com.learn.spring.tickets.domain.DTOs.ErrorDTO;
-import com.learn.spring.tickets.exceptions.EventNotFoundException;
-import com.learn.spring.tickets.exceptions.EventUpdateException;
-import com.learn.spring.tickets.exceptions.TicketTypeNotFoundException;
-import com.learn.spring.tickets.exceptions.UserNotFoundException;
+import com.learn.spring.tickets.exceptions.*;
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -73,10 +70,34 @@ public class GlobalResponseHandler {
 
 
     @ExceptionHandler(EventUpdateException.class)
-    public ResponseEntity<ErrorDTO> EventUpdateException(EventUpdateException ex){
+    public ResponseEntity<ErrorDTO> handleEventUpdateException(EventUpdateException ex){
         log.error("Caught EventUpdateException  ",ex);
         ErrorDTO errorDTO = new ErrorDTO();
         errorDTO.setError("Unable to update event");
+        return new ResponseEntity<>(errorDTO, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(QRCodeGenerationException.class)
+    public ResponseEntity<ErrorDTO> handleQRCodeGenerationException(QRCodeGenerationException ex){
+        log.error("Caught QRCodeGenerationException  ",ex);
+        ErrorDTO errorDTO = new ErrorDTO();
+        errorDTO.setError("Unable to generate QRCode");
+        return new ResponseEntity<>(errorDTO, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(QRCodeNotFoundException.class)
+    public ResponseEntity<ErrorDTO> handleQRCodeNotFoundException(QRCodeNotFoundException ex){
+        log.error("Caught QRCodeNotFoundException  ",ex);
+        ErrorDTO errorDTO = new ErrorDTO();
+        errorDTO.setError("QRCode not found.");
+        return new ResponseEntity<>(errorDTO, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(TicketsNotAvailableException.class)
+    public ResponseEntity<ErrorDTO> handleTicketsNotAvailableException(TicketsNotAvailableException ex){
+        log.error("Caught TicketsNotAvailableException  ",ex);
+        ErrorDTO errorDTO = new ErrorDTO();
+        errorDTO.setError("No tickets available.");
         return new ResponseEntity<>(errorDTO, HttpStatus.BAD_REQUEST);
     }
 
