@@ -18,7 +18,6 @@ import java.util.UUID;
 @NoArgsConstructor
 @Builder
 public class TicketValidation {
-
     @Id
     @Column(name = "id", nullable = false, updatable = false)
     @GeneratedValue(strategy = GenerationType.UUID)
