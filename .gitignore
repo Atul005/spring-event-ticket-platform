@@ -1,33 +1,35 @@
-HELP.md
-target/
-.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**/target/
-!**/src/test/**/target/
+############################
+# Backend (Spring Boot)
+############################
+event-ticket-backend/target/
+event-ticket-backend/*.log
 
-### STS ###
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
-.sts4-cache
+############################
+# Frontend (UI)
+############################
+event-ticket-frontend/node_modules/
+event-ticket-frontend/dist/
+event-ticket-frontend/*.log
 
-### IntelliJ IDEA ###
-.idea
-*.iws
-*.iml
-*.ipr
+############################
+# Docker
+############################
+docker-compose.override.yml
+*.env
+*.env.local
+*.env.development
+*.env.production
+*.dockerignore
 
-### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
-build/
-!**/src/main/**/build/
-!**/src/test/**/build/
-
-### VS Code ###
+############################
+# IDE / Editor
+############################
+.idea/
 .vscode/
+*.iml
+
+############################
+# OS Files
+############################
+.DS_Store
+Thumbs.db
